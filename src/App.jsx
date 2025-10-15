@@ -1,14 +1,28 @@
+
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
+import Registration from "./components/page/Registration";
 import Login from "./components/page/Login"
-import Registration from "./components/page/Registration"
 
 
 function App() {
-  
+
+  const router = createBrowserRouter([
+    {
+      path: "/registration",
+      element: <Registration></Registration>,
+    },
+
+    {
+      path: "/login",
+      element: <Login></Login> ,
+    },
+  ]);
+
 
   return (
     <>
-      <Registration></Registration>
-      <Login></Login>
+      <RouterProvider router={router} />
     </>
   )
 }

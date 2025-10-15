@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import register from "../../assets/register.png"
-import { FaRegEyeSlash } from "react-icons/fa6";
+import { Link } from "react-router";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
 
 const Registration = () => {
 
@@ -14,6 +17,8 @@ const Registration = () => {
     const [fullNameError, setFullNameError] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
+    const [show, setShow] = useState(false)
+
 
 
 
@@ -23,8 +28,8 @@ const Registration = () => {
     }
 
 
-    
-    
+
+
     const handleFullName = (e) => {
         setFullName(e.target.value)
         setFullNameError("")
@@ -43,7 +48,7 @@ const Registration = () => {
         if (!email) {
             setEmailError("Bhai mail de");
         } else {
-            if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+            if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
                 setEmailError("Please enter the correct email")
             }
         }
@@ -51,10 +56,10 @@ const Registration = () => {
         if (!fullName) {
             setFullNameError("Bhai tui name de")
         }
-        if(!password){
+        if (!password) {
             setPasswordError("tui password de")
         } else {
-            if(!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password)){
+            if (!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password)) {
                 setPasswordError("The string must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character, at least one special character must be 6 characters or longer")
             }
             // if(!/(?=.*[a-z])/.test(password)){
@@ -91,8 +96,16 @@ const Registration = () => {
 
                         <div className='relative w-[368px] mt-[60px]'>
                             <p className='absolute top-[-9px] left-[27px] bg-white px-[7px] font-secondary font-semibold text-[13px] text-[#11175D] tracking-[2px]'>Password</p>
-                            <input onChange={handlePassword} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type="text" placeholder='Password' />
-                            <FaRegEyeSlash className='absolute top-[26px] left-[340px] text-[#808080] cursor-pointer' />
+                            <input onChange={handlePassword} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type={show ? "text" : "password"} placeholder='Password' />
+
+                            <div className='absolute top-[40%] right-[5%]'>
+                                {
+                                    show ? <FaEye onClick={() => setShow (!show)} /> : <FaEyeSlash onClick={() => setShow (!show)} />
+                                }
+                                
+                            
+
+                            </div>
                             <p className='bg-blue-500 px-2 rounded text-white text-[14px] mt-2'>{passwordError}</p>
                         </div>
 
@@ -102,7 +115,10 @@ const Registration = () => {
                             </button>
                         </div>
                         <div className='w-[368px] mt-[35px]'>
-                            <p className='text-center font-third text-[13px] text-[#03014C]'>Already  have an account ? <span className='font-bold text-[#EA6C00] cursor-pointer'>Sign In</span></p>
+                            <p className='text-center font-third text-[13px] text-[#03014C]'>Already  have an account ?
+                                <Link to="/login"><span className='font-bold text-[#EA6C00] cursor-pointer'>Sign In</span></Link>
+
+                            </p>
                         </div>
 
                     </div>

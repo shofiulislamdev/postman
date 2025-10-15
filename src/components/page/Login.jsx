@@ -1,13 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import login from "../../assets/login.png"
 import { FcGoogle } from "react-icons/fc";
-import { FaRegEyeSlash } from "react-icons/fa6";
+
+import { Link } from 'react-router';
+
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
 
 
 
 const Login = () => {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+
+    const [show, setShow] = useState ("")
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value)
+        setEmailError("")
+    }
+
+    const handlePassword = (e) => {
+        setPassword(e.target.value)
+        setPasswordError("")
+        
+    }
+
+    const handleLogin = () => {
+        if(!email){
+            setEmailError("Mail is required")
+        } else {
+            if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+                setEmailError("You have entered an invalid email address!")
+            }
+        }
+
+        if(!password){
+            setPasswordError("Password is required")
+        } else {
+            if(!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password)){
+                setPasswordError("The string must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character, at least one special character must be 6 characters or longer")
+            }
+        }
+    }
+
+
     return (
-        <div className='pt-[100px]'>
+        <div className=''>
 
             <div className='flex items-center'>
                 <div className='w-[50%] flex justify-end'>
@@ -21,24 +66,37 @@ const Login = () => {
                         </div>
                         <div className='relative w-[368px] mt-[60px]'>
                             <p className='absolute top-[-9px] left-[-6px] bg-white px-[7px] font-secondary font-semibold text-[13px] text-[#11175D] tracking-[2px]'>Email Address</p>
-                            <input className='py-[20px] pl-[0px] pr-[66px] w-full border-b-2 outline-0 border-[#808080]' type="email" placeholder='Enter Your Email Address' />
+                            <input onChange={handleEmail} value={email} className='py-[20px] pl-[0px] pr-[66px] w-full border-b-2 outline-0 border-[#808080]' type="email" placeholder='Enter Your Email Address' />
+
+                            <p className='bg-blue-500 px-2 rounded text-white text-[14px] mt-2'>{emailError}</p>
                         </div>
 
 
                         <div className='relative w-[368px] mt-[60px]'>
                             <p className='absolute top-[-9px] left-[-6px] bg-white px-[7px] font-secondary font-semibold text-[13px] text-[#11175D] tracking-[2px]'>Password</p>
-                            <input className='py-[20px] pl-[0px] pr-[66px] w-full border-b-2 border-[#808080] outline-0' type="text" placeholder='Enter Your Password' />
-                            <FaRegEyeSlash className='absolute top-[26px] left-[350px] text-[#808080] cursor-pointer' />
+                            <input onChange={handlePassword} className='py-[20px] pl-[0px] pr-[66px] w-full border-b-2 border-[#808080] outline-0' type={ show ? "text" : "password"} placeholder='Enter Your Password' />
+
+                            <div className='absolute top-[40%] right-[5%]'>
+                                {
+                                    show ? <FaEye onClick={() => setShow(!show)} /> : <FaEyeSlash onClick={() => setShow(!show)} />
+
+                                }
+
+                            </div>
+                            
+                            <p className='bg-blue-500 px-2 rounded text-white text-[14px] mt-2'>{passwordError}</p>
 
                         </div>
 
                         <div>
-                            <button className='relative py-[20px] cursor-pointer bg-[#1E1E1E] pl-[122px] pr-[122px] text-white font-secondary text-[20px] font-semibold rounded-[9px] mt-[51px]'>Login to Continue
+                            <button onClick={handleLogin} className='relative py-[20px] cursor-pointer bg-[#1E1E1E] pl-[122px] pr-[122px] text-white font-secondary text-[20px] font-semibold rounded-[9px] mt-[51px]'>Login to Continue
                                 <span className='absolute top-[50%] left-[50%] bg-[#5B36F5]/30 h-[40px] w-[170px] blur-[10px] -translate-[50%]'></span>
                             </button>
                         </div>
                         <div className=' mt-[35px]'>
-                            <p className=' font-third text-[13px] text-[#03014C]'>Don’t have an account ? <span className='font-bold text-[#EA6C00] cursor-pointer'>Sign up</span></p>
+                            <p className=' font-third text-[13px] text-[#03014C]'>Don’t have an account ?
+                                <Link to="/registration"><span className='font-bold text-[#EA6C00] cursor-pointer'>Sign up</span></Link>
+                            </p>
                         </div>
 
                     </div>
