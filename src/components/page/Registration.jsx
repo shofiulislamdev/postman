@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import register from "../../assets/register.png"
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 const Registration = () => {
-
+    const auth = getAuth();
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [fullName, setFullName] = useState("")
     const [password, setPassword] = useState("")
@@ -18,7 +22,6 @@ const Registration = () => {
     const [passwordError, setPasswordError] = useState("")
 
     const [show, setShow] = useState(false)
-
 
 
 
@@ -44,20 +47,21 @@ const Registration = () => {
     }
 
     const handleSignUp = () => {
-        console.log(email);
+
         if (!email) {
-            setEmailError("Bhai mail de");
+            setEmailError("Email is required");
         } else {
             if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
                 setEmailError("Please enter the correct email")
             }
         }
-        console.log(fullName, password)
+
         if (!fullName) {
-            setFullNameError("Bhai tui name de")
+            setFullNameError("Fullname is required")
         }
+
         if (!password) {
-            setPasswordError("tui password de")
+            setPasswordError("Password is required")
         } else {
             if (!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password)) {
                 setPasswordError("The string must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character, at least one special character must be 6 characters or longer")
@@ -67,7 +71,36 @@ const Registration = () => {
             // } else if (!/(?=.*[A-Z])/.test(password)){
             //     setPasswordError("The string must contain at least 1 uppercase alphabetical character gg")
             // }
+
+
         }
+
+        console.log(email, fullName, password)
+
+        if (email && fullName && password && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((user) => {
+                    console.log(user, "User");
+                    toast.success("Registration Successfully done")
+                    setTimeout(() => {
+                        navigate("/login")
+                    }, 2000)
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // toast.error(errorCode)
+
+                    if (errorCode === "auth/email-already-in-use") {
+                        setEmailError("This email is already in used");
+                    }
+                    // ..
+                });
+        }
+
+
+
     }
 
 
@@ -76,6 +109,19 @@ const Registration = () => {
 
     return (
         <div>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            // transition={Bounce}
+            />
             <div className='flex items-center'>
                 <div className='w-[50%] flex justify-end'>
 
@@ -100,10 +146,10 @@ const Registration = () => {
 
                             <div className='absolute top-[40%] right-[5%]'>
                                 {
-                                    show ? <FaEye onClick={() => setShow (!show)} /> : <FaEyeSlash onClick={() => setShow (!show)} />
+                                    show ? <FaEye onClick={() => setShow(!show)} /> : <FaEyeSlash onClick={() => setShow(!show)} />
                                 }
-                                
-                            
+
+
 
                             </div>
                             <p className='bg-blue-500 px-2 rounded text-white text-[14px] mt-2'>{passwordError}</p>
@@ -120,6 +166,12 @@ const Registration = () => {
 
                             </p>
                         </div>
+
+
+
+
+
+
 
                     </div>
 
