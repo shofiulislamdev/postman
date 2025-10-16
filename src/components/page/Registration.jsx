@@ -6,6 +6,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
 
+import { Circles } from 'react-loader-spinner'
 
 
 const Registration = () => {
@@ -22,6 +23,8 @@ const Registration = () => {
     const [passwordError, setPasswordError] = useState("")
 
     const [show, setShow] = useState(false)
+
+    const [loading, setLoading] = useState(false);
 
 
 
@@ -50,21 +53,27 @@ const Registration = () => {
 
         if (!email) {
             setEmailError("Email is required");
+            // setLoading(false);
         } else {
             if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
                 setEmailError("Please enter the correct email")
+                // setLoading(false);
             }
         }
 
         if (!fullName) {
             setFullNameError("Fullname is required")
+            // setLoading(false);
         }
 
         if (!password) {
             setPasswordError("Password is required")
+            // setLoading(false);
         } else {
             if (!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password)) {
                 setPasswordError("The string must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character, at least one special character must be 6 characters or longer")
+
+                // setLoading(false)
             }
             // if(!/(?=.*[a-z])/.test(password)){
             //     setPasswordError("The string must contain at least 1 lowercase alphabetical character")
@@ -72,19 +81,24 @@ const Registration = () => {
             //     setPasswordError("The string must contain at least 1 uppercase alphabetical character gg")
             // }
 
+            // setLoading(true);
+
 
         }
 
         console.log(email, fullName, password)
 
-        if (email && fullName && password && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+        if (email && fullName && password && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) && (/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password))) {
+            setLoading(true);
+
             createUserWithEmailAndPassword(auth, email, password)
                 .then((user) => {
                     console.log(user, "User");
                     toast.success("Registration Successfully done")
                     setTimeout(() => {
                         navigate("/login")
-                    }, 2000)
+                    }, 2000);
+                    // setLoading(false);
 
                 })
                 .catch((error) => {
@@ -95,6 +109,8 @@ const Registration = () => {
                     if (errorCode === "auth/email-already-in-use") {
                         setEmailError("This email is already in used");
                     }
+
+                    setLoading(false);
                     // ..
                 });
         }
@@ -144,7 +160,7 @@ const Registration = () => {
                             <p className='absolute top-[-9px] left-[27px] bg-white px-[7px] font-secondary font-semibold text-[13px] text-[#11175D] tracking-[2px]'>Password</p>
                             <input onChange={handlePassword} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type={show ? "text" : "password"} placeholder='Password' />
 
-                            <div className='absolute top-[40%] right-[5%]'>
+                            <div className='absolute top-[25px] right-[5%]'>
                                 {
                                     show ? <FaEye onClick={() => setShow(!show)} /> : <FaEyeSlash onClick={() => setShow(!show)} />
                                 }
@@ -156,9 +172,27 @@ const Registration = () => {
                         </div>
 
                         <div>
-                            <button onClick={handleSignUp} className='relative py-[20px] bg-[#1E1E1E] pl-[150px] pr-[148px] text-white font-secondary cursor-pointer text-[20px] font-semibold rounded-[86px] mt-[51px]'>Sign up
+                            
+                            {
+                                loading ? <div className='ml-[30%]'><Circles
+                                    height="80"
+                                    width="80"
+                                    color="#4fa94d"
+                                    ariaLabel="circles-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                    visible={true}
+                                /></div> : (<button onClick={handleSignUp} className='relative py-[20px] bg-[#1E1E1E] pl-[150px] pr-[148px] text-white font-secondary cursor-pointer text-[20px] font-semibold rounded-[86px] mt-[51px]'>Sign up
+                                    <span className='absolute top-[50%] left-[50%] bg-[#5B36F5]/30 h-[40px] w-[98px] blur-[10px] -translate-[50%]'></span>
+                                </button>)
+                            }
+
+
+
+
+                            {/* <button onClick={handleSignUp} className='relative py-[20px] bg-[#1E1E1E] pl-[150px] pr-[148px] text-white font-secondary cursor-pointer text-[20px] font-semibold rounded-[86px] mt-[51px]'>Sign up
                                 <span className='absolute top-[50%] left-[50%] bg-[#5B36F5]/30 h-[40px] w-[98px] blur-[10px] -translate-[50%]'></span>
-                            </button>
+                            </button> */}
                         </div>
                         <div className='w-[368px] mt-[35px]'>
                             <p className='text-center font-third text-[13px] text-[#03014C]'>Already  have an account ?
@@ -166,7 +200,6 @@ const Registration = () => {
 
                             </p>
                         </div>
-
 
 
 
