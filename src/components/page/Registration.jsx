@@ -53,35 +53,28 @@ const Registration = () => {
 
         if (!email) {
             setEmailError("Email is required");
-            // setLoading(false);
         } else {
             if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
                 setEmailError("Please enter the correct email")
-                // setLoading(false);
             }
         }
 
         if (!fullName) {
             setFullNameError("Fullname is required")
-            // setLoading(false);
         }
 
         if (!password) {
             setPasswordError("Password is required")
-            // setLoading(false);
         } else {
             if (!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(password)) {
                 setPasswordError("The string must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character, at least one special character must be 6 characters or longer")
 
-                // setLoading(false)
             }
             // if(!/(?=.*[a-z])/.test(password)){
             //     setPasswordError("The string must contain at least 1 lowercase alphabetical character")
             // } else if (!/(?=.*[A-Z])/.test(password)){
             //     setPasswordError("The string must contain at least 1 uppercase alphabetical character gg")
             // }
-
-            // setLoading(true);
 
 
         }
