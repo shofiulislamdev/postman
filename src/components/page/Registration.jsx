@@ -3,7 +3,7 @@ import register from "../../assets/register.png"
 import { Link, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Circles } from 'react-loader-spinner'
@@ -86,11 +86,16 @@ const Registration = () => {
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((user) => {
+                    sendEmailVerification(auth.currentUser)
                     console.log(user, "User");
-                    toast.success("Registration Successfully done")
+                    toast.success("Registration Successfully done. Please Verify your email")
                     setTimeout(() => {
                         navigate("/login")
                     }, 2000);
+
+                    setEmail("")
+                    setFullName("")
+                    setPassword("")
                     // setLoading(false);
 
                 })
@@ -145,13 +150,13 @@ const Registration = () => {
 
                         <div className='relative w-[368px] mt-[60px]'>
                             <p className='absolute top-[-9px] left-[27px] bg-white px-[7px] font-secondary font-semibold text-[13px] text-[#11175D] tracking-[2px]'>Full name</p>
-                            <input onChange={handleFullName} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type="text" placeholder='Full name' />
+                            <input onChange={handleFullName} value={fullName} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type="text" placeholder='Full name' />
                             <p className='bg-blue-500 px-2 rounded text-white text-[14px] mt-2'>{fullNameError}</p>
                         </div>
 
                         <div className='relative w-[368px] mt-[60px]'>
                             <p className='absolute top-[-9px] left-[27px] bg-white px-[7px] font-secondary font-semibold text-[13px] text-[#11175D] tracking-[2px]'>Password</p>
-                            <input onChange={handlePassword} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type={show ? "text" : "password"} placeholder='Password' />
+                            <input onChange={handlePassword} value={password} className='py-[20px] pl-[32px] pr-[66px] w-full border-2 rounded-[9px] border-[#808080]' type={show ? "text" : "password"} placeholder='Password' />
 
                             <div className='absolute top-[25px] right-[5%]'>
                                 {
