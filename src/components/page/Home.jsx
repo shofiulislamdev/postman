@@ -15,14 +15,11 @@ const Home = () => {
         } 
     });
 
-   
-
-
     return (
         <div>
             {
                 verify ?
-                    <p>Home</p>
+                    <p className='text-green-700'>Home</p>
                     :
                     <p>Please verify your email</p>
             }
