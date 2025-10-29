@@ -58,7 +58,7 @@ const ForgotPassword = () => {
 
                 </button>
 
-                <Link to="/login" onClick={handleResetPassword} className='relative py-[10px] ml-5 cursor-pointer bg-[#1E1E1E] pl-[10px] pr-[10px] text-white font-secondary text-[16px] font-semibold rounded-[9px] mt-[10px]'>Go Back
+                <Link to="/login"  className='relative py-[10px] ml-5 cursor-pointer bg-[#1E1E1E] pl-[10px] pr-[10px] text-white font-secondary text-[16px] font-semibold rounded-[9px] mt-[10px]'>Go Back
 
                 </Link>
             </div>
