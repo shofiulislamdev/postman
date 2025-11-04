@@ -7,10 +7,12 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Circles } from 'react-loader-spinner'
+import { getDatabase, ref, set } from "firebase/database";
 
 
 const Registration = () => {
     const auth = getAuth();
+    const db = getDatabase();
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [fullName, setFullName] = useState("")
@@ -89,6 +91,13 @@ const Registration = () => {
                     sendEmailVerification(auth.currentUser)
                     console.log(user, "User");
                     toast.success("Registration Successfully done. Please Verify your email")
+
+                    set(ref(db, 'users/' + user.user.uid), {
+                        username: fullName,
+                        email: email,
+                    });
+
+
                     setTimeout(() => {
                         navigate("/login")
                     }, 2000);
@@ -170,7 +179,7 @@ const Registration = () => {
                         </div>
 
                         <div>
-                            
+
                             {
                                 loading ? <div className='ml-[30%]'><Circles
                                     height="80"

@@ -3,6 +3,12 @@ import { useSelector } from 'react-redux'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from 'react-router';
 import Sidebar from '../Sidebar/Sidebar';
+import GroupsList from '../GroupsList/GroupsList';
+import Friends from '../Friends/Friends';
+import UserList from '../UserList/UserList';
+import FriendRequest from '../FriendRequest/FriendRequest';
+import MyGroups from '../MyGroups/MyGroups';
+import BlockedUsers from '../BlockedUsers/BlockedUsers';
 
 const Home = () => {
     const auth = getAuth();
@@ -41,7 +47,25 @@ const Home = () => {
             {
                 verify ?
                     <div>
-                        <Sidebar></Sidebar>
+                        <div className='flex m-[35px]'>
+                            <Sidebar></Sidebar>
+                            <div className='w-[427px] ml-[43px]'>
+                                <GroupsList></GroupsList>
+                                <FriendRequest></FriendRequest>
+                            </div>
+
+                            <div className='w-[427px] ml-[43px]'>
+                                <Friends></Friends>
+                                <MyGroups></MyGroups>
+                            </div>
+
+                            <div className='w-[427px] ml-[43px]'>
+                                <UserList></UserList>
+                                <BlockedUsers></BlockedUsers>
+                            </div>
+                            
+                        </div>
+
                     </div>
                     :
                     <div className='bg-black w-full h-screen flex justify-center items-center font-primary text-center'>

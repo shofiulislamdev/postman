@@ -1,125 +1,97 @@
 import React from 'react'
+
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import raghav from "../../assets/raghav.png"
 import swathi from "../../assets/swathi.png"
 import kiran from "../../assets/kiran.png"
 import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
+
 import { FaSquarePlus } from "react-icons/fa6";
 
 
 const UserList = () => {
     return (
-        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] p-[20px] rounded-[20px] ml-[43px]'>
-            <div className='flex items-center'>
+        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px]'>
+            <div className='flex justify-between items-center'>
                 <h1 className='font-primary font-semibold text-[20px]'>User List</h1>
-                <HiOutlineDotsVertical className='ml-[201px]' />
+                <HiOutlineDotsVertical className='text-xl' />
             </div>
 
-            <div className='relative flex items-center mt-[29px]'>
-                <div>
-                    <img src={raghav} alt="" />
-                </div>
+            <div className='px-[10px] h-[390px] overflow-y-scroll'>
+                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                    <div className='flex items-center'>
+                        <img src={raghav} alt="" />
 
-                <div className='ml-[14px]'>
-                    <p className='font-primary font-semibold text-[14px]'>Raghav</p>
-                    <p className='font-primary font-medium text-[10px] text-[#4D4D4D]/75'>Today, 8:56pm</p>
-                </div>
+                        <div className='ml-[14px]'>
+                            <h3 className='font-semibold font-primary text-[18px]'>Raghav</h3>
+                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 8:56pm</p>
+                        </div>
+                    </div>
 
-                <div className='ml-[89px]'>
                     <FaSquarePlus className='text-[30px]' />
+
                 </div>
 
-                <div className='absolute bottom-[-10px] left-0 h-[1px] w-[277px] bg-black/25'></div>
-            </div>
 
+                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                    <div className='flex items-center'>
+                        <img src={swathi} alt="" />
 
+                        <div className='ml-[14px]'>
+                            <h3 className='font-semibold font-primary text-[18px]'>Swathi</h3>
+                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 2:31pm</p>
+                        </div>
+                    </div>
 
-
-            <div className='relative flex items-center mt-[25px]'>
-                <div>
-                    <img src={swathi} alt="" />
-                </div>
-
-                <div className='ml-[14px]'>
-                    <p className='font-primary font-semibold text-[14px]'>Swathi</p>
-                    <p className='font-primary font-medium text-[10px] text-[#4D4D4D]/75'>Today, 2:31pm</p>
-                </div>
-
-                <div className='ml-[92px]'>
                     <FaSquarePlus className='text-[30px]' />
+
                 </div>
 
-                <div className='absolute bottom-[-10px] left-0 h-[1px] w-[277px] bg-black/25'></div>
-            </div>
 
+                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                    <div className='flex items-center'>
+                        <img src={kiran} alt="" />
 
+                        <div className='ml-[14px]'>
+                            <h3 className='font-semibold font-primary text-[18px]'>Kiran</h3>
+                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Yesterday, 6:22pm</p>
+                        </div>
+                    </div>
 
-
-            <div className='relative flex items-center mt-[25px]'>
-                <div>
-                    <img src={kiran} alt="" />
-                </div>
-
-                <div className='ml-[14px]'>
-                    <p className='font-primary font-semibold text-[14px]'>Kiran</p>
-                    <p className='font-primary font-medium text-[10px] text-[#4D4D4D]/75'>Yesterday, 6:22pm</p>
-                </div>
-
-                <div className='ml-[71px]'>
                     <FaSquarePlus className='text-[30px]' />
+
                 </div>
 
-                <div className='absolute bottom-[-10px] left-0 h-[1px] w-[277px] bg-black/25'></div>
-            </div>
+                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                    <div className='flex items-center'>
+                        <img src={tejesh} alt="" />
 
+                        <div className='ml-[14px]'>
+                            <h3 className='font-semibold font-primary text-[18px]'>Tejeshwini C</h3>
+                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 12:22pm</p>
+                        </div>
+                    </div>
 
-
-            <div className='relative flex items-center mt-[25px]'>
-                <div>
-                    <img src={tejesh} alt="" />
-                </div>
-
-                <div className='ml-[14px]'>
-                    <p className='font-primary font-semibold text-[14px]'>Tejeshwini C</p>
-                    <p className='font-primary font-medium text-[10px] text-[#4D4D4D]/75'>Today, 12:22pm</p>
-                </div>
-
-                <div className='ml-[75px]'>
                     <FaSquarePlus className='text-[30px]' />
+
                 </div>
 
-                <div className='absolute bottom-[-10px] left-0 h-[1px] w-[277px] bg-black/25'></div>
-            </div>
 
+                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                    <div className='flex items-center'>
+                        <img src={marvin} alt="" />
 
+                        <div className='ml-[14px]'>
+                            <h3 className='font-semibold font-primary text-[18px]'>Marvin McKinney</h3>
+                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 8:56pm</p>
+                        </div>
+                    </div>
 
-
-
-            <div className='relative flex items-center mt-[25px]'>
-                <div>
-                    <img src={marvin} alt="" />
-                </div>
-
-                <div className='ml-[14px]'>
-                    <p className='font-primary font-semibold text-[14px]'>Marvin McKinney</p>
-                    <p className='font-primary font-medium text-[10px] text-[#4D4D4D]/75'>Today, 8:56pm</p>
-                </div>
-
-                <div className='ml-[41px]'>
                     <FaSquarePlus className='text-[30px]' />
+
                 </div>
-
             </div>
-
-
-
-
-
-
-
-
-
         </div>
     )
 }
