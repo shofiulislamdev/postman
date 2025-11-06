@@ -19,15 +19,22 @@ const Sidebar = () => {
 
     const auth = getAuth()
     const navigate = useNavigate()
-    const handleLogout = () => {
+
+    const handleSignOut = () => {
         signOut(auth)
-      .then(() => {
-        localStorage.clear(); 
-        navigate("/login"); 
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-      });
+            .then(() => {
+                // localStorage.clear();
+                localStorage.removeItem("userInfo")
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 2000)
+
+
+            })
+            .catch((error) => {
+                console.error("Logout error:", error);
+            });
     }
 
 
@@ -61,7 +68,7 @@ const Sidebar = () => {
 
                 <div className='absolute left-[50%] translate-x-[-50%] bottom-[48px]'>
 
-                    <ImExit onClick={handleLogout} className='text-5xl text-white cursor-pointer' />
+                    <ImExit onClick={handleSignOut} className='text-5xl text-white cursor-pointer' />
 
                 </div>
 
