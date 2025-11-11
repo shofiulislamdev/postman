@@ -9,10 +9,13 @@ import marvin from "../../assets/marvin.png"
 
 import { FaSquarePlus } from "react-icons/fa6";
 
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
+import { useSelector } from 'react-redux';
 
 
 const UserList = () => {
+    const data = useSelector((selector) => (selector.userInfo?.value?.user))
+    console.log(data?.uid, "UID")
 
     const db = getDatabase();
     const [userList, setUserList] = useState([])
@@ -22,7 +25,11 @@ const UserList = () => {
         onValue(userRef, (snapshot) => {
             let arr = []
             snapshot.forEach((item) => {
-                arr.push(item.val())
+                if (data.uid !== item.key) {
+                    arr.push(item.val())
+
+                }
+
             })
             setUserList(arr)
         })
@@ -30,6 +37,15 @@ const UserList = () => {
 
     console.log(userList)
 
+    const handleFriendRequest = (item) => {
+        console.log("ok", item)
+        set(ref(db, 'friendRequest/' + Date.now()), {
+            senderName: data.displayName,
+            receiverName: item.username
+        });
+
+
+    }
 
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px]'>
@@ -52,74 +68,13 @@ const UserList = () => {
                                 </div>
                             </div>
 
-                            <FaSquarePlus className='text-[30px]' />
+                            <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
 
                         </div>
 
                     ))
                 }
 
-
-
-
-
-                {/* <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                    <div className='flex items-center'>
-                        <img src={swathi} alt="" />
-
-                        <div className='ml-[14px]'>
-                            <h3 className='font-semibold font-primary text-[18px]'>Swathi</h3>
-                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 2:31pm</p>
-                        </div>
-                    </div>
-
-                    <FaSquarePlus className='text-[30px]' />
-
-                </div>
-
-
-                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                    <div className='flex items-center'>
-                        <img src={kiran} alt="" />
-
-                        <div className='ml-[14px]'>
-                            <h3 className='font-semibold font-primary text-[18px]'>Kiran</h3>
-                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Yesterday, 6:22pm</p>
-                        </div>
-                    </div>
-
-                    <FaSquarePlus className='text-[30px]' />
-
-                </div>
-
-                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                    <div className='flex items-center'>
-                        <img src={tejesh} alt="" />
-
-                        <div className='ml-[14px]'>
-                            <h3 className='font-semibold font-primary text-[18px]'>Tejeshwini C</h3>
-                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 12:22pm</p>
-                        </div>
-                    </div>
-
-                    <FaSquarePlus className='text-[30px]' />
-
-                </div>
-
-
-                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                    <div className='flex items-center'>
-                        <img src={marvin} alt="" />
-
-                        <div className='ml-[14px]'>
-                            <h3 className='font-semibold font-primary text-[18px]'>Marvin McKinney</h3>
-                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Today, 8:56pm</p>
-                        </div>
-                    </div>
-
-                    <FaSquarePlus className='text-[30px]' />
-
-                </div> */}
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import raghav from "../../assets/raghav.png"
 import swathi from "../../assets/swathi.png"
@@ -7,7 +7,33 @@ import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
 
 
+
+
+
+import { getDatabase, onValue, ref } from "firebase/database";
+
+
 const FriendRequest = () => {
+
+
+
+    const db = getDatabase();
+    const [friendRequestList, setFriendRequestList] = useState([])
+    useEffect(() => {
+        const friendRequestRef = ref(db, "friendRequest")
+        onValue(friendRequestRef, (snapshot) => {
+            let arr = []
+            snapshot.forEach((item) => {
+                arr.push(item.val())
+            })
+            setFriendRequestList(arr)
+        })
+    }, [])
+    console.log(friendRequestList)
+
+
+
+
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px] mt-9'>
             <div className='flex justify-between items-center'>
@@ -16,7 +42,29 @@ const FriendRequest = () => {
             </div>
 
             <div className='px-[10px] h-[390px] overflow-y-scroll'>
-                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+
+                {
+                    friendRequestList.map((friendRequest) => (
+                        <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                            <div className='flex items-center'>
+                                <img src={raghav} alt="" />
+
+                                <div className='ml-[14px]'>
+                                    <h3 className='font-semibold font-primary text-[18px]'>{friendRequest.receiverName}</h3>
+                                    {/* <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>{friendRequest.email}</p> */}
+                                </div>
+                            </div>
+
+                            <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
+
+                        </div>
+
+                    ))
+                }
+
+
+
+                {/* <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
                     <div className='flex items-center'>
                         <img src={raghav} alt="" />
 
@@ -28,10 +76,10 @@ const FriendRequest = () => {
 
                     <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
 
-                </div>
+                </div> */}
 
 
-                <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                {/* <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
                     <div className='flex items-center'>
                         <img src={swathi} alt="" />
 
@@ -87,7 +135,7 @@ const FriendRequest = () => {
 
                     <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
 
-                </div>
+                </div> */}
             </div>
         </div>
     )

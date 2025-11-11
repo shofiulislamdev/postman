@@ -9,15 +9,17 @@ import { ImExit } from "react-icons/im";
 
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { userInfo } from '../../slices/userSlice';
 
 
 
 
 const Sidebar = () => {
-
-
+    const data = useSelector((selector) => (selector.userInfo?.value?.user))
 
     const auth = getAuth()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleSignOut = () => {
@@ -25,6 +27,7 @@ const Sidebar = () => {
             .then(() => {
                 // localStorage.clear();
                 localStorage.removeItem("userInfo")
+                dispatch(userInfo(null))
 
                 setTimeout(() => {
                     navigate("/login");
@@ -45,6 +48,10 @@ const Sidebar = () => {
             <div className='bg-[#1E1E1E] font-primary text-white w-[186px] h-screen rounded-[20px] relative'>
                 <div className='flex justify-center pt-[38px]'>
                     <img src={profilepic} alt="" />
+                </div>
+
+                <div className='flex justify-center mt-2 text-xl font-bold'>
+                    <p>{data?.displayName}</p>
                 </div>
 
                 <div>
