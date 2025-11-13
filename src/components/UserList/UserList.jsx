@@ -7,15 +7,14 @@ import kiran from "../../assets/kiran.png"
 import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
 
-import { FaSquarePlus } from "react-icons/fa6";
+import { FaSquarePlus, FaSquareMinus } from "react-icons/fa6";
 
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, push, ref, set } from "firebase/database";
 import { useSelector } from 'react-redux';
 
 
 const UserList = () => {
     const data = useSelector((selector) => (selector.userInfo?.value?.user))
-    console.log(data?.uid, "UID")
 
     const db = getDatabase();
     const [userList, setUserList] = useState([])
@@ -25,8 +24,8 @@ const UserList = () => {
         onValue(userRef, (snapshot) => {
             let arr = []
             snapshot.forEach((item) => {
-                if (data.uid !== item.key) {
-                    arr.push(item.val())
+                if (data?.uid !== item.key) {
+                    arr.push({ ...item?.val(), userid: item.key })
 
                 }
 
@@ -35,17 +34,37 @@ const UserList = () => {
         })
     }, [])
 
-    console.log(userList)
-
     const handleFriendRequest = (item) => {
         console.log("ok", item)
-        set(ref(db, 'friendRequest/' + Date.now()), {
+        set(push(ref(db, 'friendRequest/')), {
             senderName: data.displayName,
-            receiverName: item.username
+            senderId: data.uid,
+            receiverName: item.username,
+            receiverId: item.userid
         });
-
-
     }
+
+
+
+    const [friendRequestList, setFriendRequestList] = useState([])
+    useEffect(() => {
+        const friendRequestRef = ref(db, "friendRequest")
+        onValue(friendRequestRef, (snapshot) => {
+            let arr = []
+            snapshot.forEach((item) => {
+                arr.push(item.val().receiverId + item.val().senderId)
+
+            })
+            setFriendRequestList(arr)
+        })
+
+    }, [])
+
+    console.log(friendRequestList)
+    console.log(userList)
+
+
+
 
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px]'>
@@ -68,7 +87,18 @@ const UserList = () => {
                                 </div>
                             </div>
 
-                            <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
+                            {
+                                friendRequestList.includes(data.uid+user.userid) ||
+                                friendRequestList.includes(user.userid+data.uid)
+                                ?
+                                <FaSquareMinus className='text-[30px]' />
+                                :
+                                <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
+
+                                
+                            }
+
+                            
 
                         </div>
 

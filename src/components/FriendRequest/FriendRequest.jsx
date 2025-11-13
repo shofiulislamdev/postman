@@ -5,34 +5,41 @@ import swathi from "../../assets/swathi.png"
 import kiran from "../../assets/kiran.png"
 import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
-
-
-
-
-
-import { getDatabase, onValue, ref } from "firebase/database";
-
+import { getDatabase, onValue, ref, set } from 'firebase/database';
+import { useSelector } from 'react-redux';
 
 const FriendRequest = () => {
+    const data = useSelector((selector) => (selector.userInfo?.value?.user))
+    const db = getDatabase()
+    const [friendRequest, setFriendRequest] = useState([]);
 
-
-
-    const db = getDatabase();
-    const [friendRequestList, setFriendRequestList] = useState([])
     useEffect(() => {
         const friendRequestRef = ref(db, "friendRequest")
         onValue(friendRequestRef, (snapshot) => {
             let arr = []
             snapshot.forEach((item) => {
-                arr.push(item.val())
+                if(data.uid == item.val().receiverId){
+                    arr.push(item.val());
+                }
+                
             })
-            setFriendRequestList(arr)
+            setFriendRequest(arr)
         })
+
     }, [])
-    console.log(friendRequestList)
+    console.log(friendRequest)
 
 
+    const handleFriend = (item) => {
+        console.log(item)
+        set(ref(db, "friend"),{
+            receiverName: item.receiverName,
+            receiverId: item.receiverId,
+            senderName: item.senderName,
+            senderId: item.senderId
+        })
 
+    }
 
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px] mt-9'>
@@ -44,18 +51,18 @@ const FriendRequest = () => {
             <div className='px-[10px] h-[390px] overflow-y-scroll'>
 
                 {
-                    friendRequestList.map((friendRequest) => (
+                    friendRequest.map((item) => (
                         <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
                             <div className='flex items-center'>
                                 <img src={raghav} alt="" />
 
                                 <div className='ml-[14px]'>
-                                    <h3 className='font-semibold font-primary text-[18px]'>{friendRequest.receiverName}</h3>
-                                    {/* <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>{friendRequest.email}</p> */}
+                                    <h3 className='font-semibold font-primary text-[18px]'>{item.senderName}</h3>
+                                    <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Dinner?</p>
                                 </div>
                             </div>
 
-                            <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
+                            <button onClick={()=>handleFriend(item)} className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
 
                         </div>
 
@@ -64,19 +71,6 @@ const FriendRequest = () => {
 
 
 
-                {/* <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                    <div className='flex items-center'>
-                        <img src={raghav} alt="" />
-
-                        <div className='ml-[14px]'>
-                            <h3 className='font-semibold font-primary text-[18px]'>Raghav</h3>
-                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Dinner?</p>
-                        </div>
-                    </div>
-
-                    <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
-
-                </div> */}
 
 
                 {/* <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>

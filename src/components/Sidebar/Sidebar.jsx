@@ -16,7 +16,8 @@ import { userInfo } from '../../slices/userSlice';
 
 
 const Sidebar = () => {
-    const data = useSelector((selector) => (selector.userInfo?.value?.user))
+    const data = useSelector((selector) => (selector?.userInfo?.value))
+    console.log(data);
 
     const auth = getAuth()
     const dispatch = useDispatch()
@@ -51,7 +52,7 @@ const Sidebar = () => {
                 </div>
 
                 <div className='flex justify-center mt-2 text-xl font-bold'>
-                    <p>{data?.displayName}</p>
+                    <p>{data?.displayName || data?.user?.displayName}</p>
                 </div>
 
                 <div>
