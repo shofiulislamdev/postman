@@ -38,7 +38,7 @@ const UserList = () => {
         console.log("ok", item)
         set(push(ref(db, 'friendRequest/')), {
             senderName: data.displayName,
-            senderId: data.uid,
+            senderId: data?.uid,
             receiverName: item.username,
             receiverId: item.userid
         });
@@ -88,8 +88,8 @@ const UserList = () => {
                             </div>
 
                             {
-                                friendRequestList.includes(data.uid+user.userid) ||
-                                friendRequestList.includes(user.userid+data.uid)
+                                friendRequestList.includes(data?.uid+user.userid) ||
+                                friendRequestList.includes(user.userid+data?.uid)
                                 ?
                                 <FaSquareMinus className='text-[30px]' />
                                 :

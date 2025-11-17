@@ -17,6 +17,7 @@ const Home = () => {
 
 
     const data = useSelector(state => (state.userInfo.value))
+    console.log(data, "Data")
 
 
     const [verify, setVerify] = useState(false)
@@ -27,7 +28,7 @@ const Home = () => {
         if (!data) {
             navigate("/login")
         }
-    })
+    },[])
 
     onAuthStateChanged(auth, (user) => {
         if (user?.emailVerified) {
@@ -38,7 +39,7 @@ const Home = () => {
 
 
     if (loading) {
-        return null
+        return " ";
     }
     // ekhane loading true hole retuen null kore dilam
 

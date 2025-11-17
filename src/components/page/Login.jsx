@@ -63,7 +63,7 @@ const Login = () => {
                 .then((user) => {
                     console.log(user, "login")
 
-                    dispatch(userInfo(user.user))
+                    dispatch(userInfo(user))
 
                     localStorage.setItem("userInfo", JSON.stringify(user))
 
