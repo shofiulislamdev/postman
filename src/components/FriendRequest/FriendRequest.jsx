@@ -5,7 +5,7 @@ import swathi from "../../assets/swathi.png"
 import kiran from "../../assets/kiran.png"
 import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
-import { getDatabase, onValue, ref, set } from 'firebase/database';
+import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database';
 import { useSelector } from 'react-redux';
 
 const FriendRequest = () => {
@@ -19,7 +19,7 @@ const FriendRequest = () => {
             let arr = []
             snapshot.forEach((item) => {
                 if(data.uid == item.val().receiverId){
-                    arr.push(item.val());
+                    arr.push({ ...item.val(), reqKey: item.key });
                 }
                 
             })
@@ -32,12 +32,15 @@ const FriendRequest = () => {
 
     const handleFriend = (item) => {
         console.log(item)
-        set(ref(db, "friend"),{
+        set(push(ref(db, "friend")),{
             receiverName: item.receiverName,
             receiverId: item.receiverId,
             senderName: item.senderName,
             senderId: item.senderId
         })
+
+
+        remove(ref(db, "friendRequest/" + item.reqKey));
 
     }
 
@@ -52,7 +55,7 @@ const FriendRequest = () => {
 
                 {
                     friendRequest.map((item) => (
-                        <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                        <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25' key={item.reqKey}>
                             <div className='flex items-center'>
                                 <img src={raghav} alt="" />
 

@@ -66,6 +66,24 @@ const UserList = () => {
 
 
 
+
+
+
+    const [friendsList, setFriendsList] = useState([]);
+    useEffect(() => {
+        const friendRef = ref(db, "friend");
+        onValue(friendRef, (snapshot) => {
+            let arr = [];
+            snapshot.forEach((item) => {
+                arr.push(item.val().senderId + item.val().receiverId);
+            });
+            setFriendsList(arr);
+        });
+    }, []);
+
+
+
+
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px]'>
             <div className='flex justify-between items-center'>
@@ -88,17 +106,24 @@ const UserList = () => {
                             </div>
 
                             {
-                                friendRequestList.includes(data?.uid+user.userid) ||
-                                friendRequestList.includes(user.userid+data?.uid)
-                                ?
-                                <FaSquareMinus className='text-[30px]' />
-                                :
-                                <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
+                                friendsList.includes(data?.uid + user.userid) ||
+                                    friendsList.includes(user.userid + data?.uid)
+                                    ?
+                                    <p className='text-green-600 font-semibold'>Friend</p>
+                                    :
 
-                                
+
+                                    friendRequestList.includes(data?.uid + user.userid) ||
+                                        friendRequestList.includes(user.userid + data?.uid)
+                                        ?
+                                        <FaSquareMinus className='text-[30px]' />
+                                        :
+                                        <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
+
+
                             }
 
-                            
+
 
                         </div>
 
