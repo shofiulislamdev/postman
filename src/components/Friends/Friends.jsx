@@ -6,32 +6,32 @@ import swathi from "../../assets/swathi.png"
 import kiran from "../../assets/kiran.png"
 import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
-import { useSelector } from 'react-redux';
 import { getDatabase, onValue, ref } from 'firebase/database';
+import { useSelector } from 'react-redux';
+
 
 const Friends = () => {
 
+    const db = getDatabase()
+    const data = useSelector((selector) => (selector.userInfo?.value?.user))
 
-    const data = useSelector((selector) => selector?.userInfo?.value?.user);
-    const db = getDatabase();
-    const [friendsList, setFriendsList] = useState([]);
+    const [friendList, setFriendList] = useState([])
 
     useEffect(() => {
-        const friendRef = ref(db, "friend");
+        const friendRef = ref(db, "friend")
         onValue(friendRef, (snapshot) => {
             let arr = [];
             snapshot.forEach((item) => {
-                const fr = item.val();
-
-                if (fr.senderId == data?.uid || fr.receiverId == data?.uid) {
-                    arr.push(fr);
+                if(data?.uid == item.val().receiverId || data?.uid == item.val().senderId){
+                    arr.push(item.val())
                 }
-            });
-            setFriendsList(arr);
-        });
+                
+            })
+            setFriendList(arr)
+        })
+
     }, [])
-
-
+    console.log(friendList)
 
 
 
@@ -45,52 +45,35 @@ const Friends = () => {
 
             <div className='px-[10px] h-[390px] overflow-y-scroll'>
 
-
                 {
-                    friendsList.map((item) => {
-                        const friendName =
-                            item.senderId == data?.uid
-                                ? item.receiverName
-                                : item.senderName;
+                    friendList.map((item) => (
+                        <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
+                            <div className='flex items-center'>
+                                <img src={raghav} alt="" />
 
-                        return (
+                                <div className='ml-[14px]'>
+                                    <h3 className='font-semibold font-primary text-[18px]'>
 
-                            <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                                <div className='flex items-center'>
-                                    <img src={raghav} alt="" />
-
-                                    <div className='ml-[14px]'>
-                                        <h3 className='font-semibold font-primary text-[18px]'>{friendName}</h3>
-                                        {/* <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Dinner?</p> */}
-                                    </div>
+                                        {
+                                            data?.uid == item.receiverId ? item.senderName : item.receiverName
+                                        }
+                                        
+                                        </h3>
+                                    <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Dinner?</p>
                                 </div>
-
-                                {/* <p className='font-primary font-medium text-[10px] text-black/50'>Today, 8:56pm</p> */}
-
                             </div>
 
-                        )
+                            <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[22px] py-[2px] rounded-[5px]'>Block</button>
 
-                    })
+                        </div>
+
+                    ))
                 }
 
 
 
 
 
-                {/* <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
-                    <div className='flex items-center'>
-                        <img src={raghav} alt="" />
-
-                        <div className='ml-[14px]'>
-                            <h3 className='font-semibold font-primary text-[18px]'>Raghav</h3>
-                            <p className='font-primary font-medium text-[14px] text-[#4D4D4D]/75'>Dinner?</p>
-                        </div>
-                    </div>
-
-                    <p className='font-primary font-medium text-[10px] text-black/50'>Today, 8:56pm</p>
-
-                </div> */}
 
 
                 {/* <div className='relative flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>

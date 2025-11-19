@@ -60,26 +60,22 @@ const UserList = () => {
 
     }, [])
 
-    console.log(friendRequestList)
-    console.log(userList)
 
 
-
-
-
-
-
-    const [friendsList, setFriendsList] = useState([]);
+    const [friendList, setFriendList] = useState([])
     useEffect(() => {
-        const friendRef = ref(db, "friend");
+        const friendRef = ref(db, "friend")
         onValue(friendRef, (snapshot) => {
             let arr = [];
             snapshot.forEach((item) => {
-                arr.push(item.val().senderId + item.val().receiverId);
-            });
-            setFriendsList(arr);
-        });
-    }, []);
+                arr.push(item.val().receiverId + item.val().senderId)
+
+            })
+            setFriendList(arr)
+        })
+
+    }, [])
+
 
 
 
@@ -106,13 +102,12 @@ const UserList = () => {
                             </div>
 
                             {
-                                friendsList.includes(data?.uid + user.userid) ||
-                                    friendsList.includes(user.userid + data?.uid)
-                                    ?
-                                    <p className='text-green-600 font-semibold'>Friend</p>
+                                friendList.includes(data?.uid + user.userid) ||
+                                    friendList.includes(user.userid + data?.uid) ? (
+                                    <p className='text-green-600 font-semibold font-primary'>Friend</p>
+
+                                )
                                     :
-
-
                                     friendRequestList.includes(data?.uid + user.userid) ||
                                         friendRequestList.includes(user.userid + data?.uid)
                                         ?

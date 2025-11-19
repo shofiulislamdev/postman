@@ -18,10 +18,10 @@ const FriendRequest = () => {
         onValue(friendRequestRef, (snapshot) => {
             let arr = []
             snapshot.forEach((item) => {
-                if(data.uid == item.val().receiverId){
-                    arr.push({ ...item.val(), reqKey: item.key });
+                if (data.uid == item.val().receiverId) {
+                    arr.push({ ...item.val(), userId: item.key });
                 }
-                
+
             })
             setFriendRequest(arr)
         })
@@ -32,15 +32,12 @@ const FriendRequest = () => {
 
     const handleFriend = (item) => {
         console.log(item)
-        set(push(ref(db, "friend")),{
-            receiverName: item.receiverName,
-            receiverId: item.receiverId,
-            senderName: item.senderName,
-            senderId: item.senderId
+        set(push(ref(db, "friend")), {
+            ...item
+        }).then(() => {
+            remove(ref(db, "friendRequest/" + item.userId))
         })
 
-
-        remove(ref(db, "friendRequest/" + item.reqKey));
 
     }
 
@@ -55,7 +52,7 @@ const FriendRequest = () => {
 
                 {
                     friendRequest.map((item) => (
-                        <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25' key={item.reqKey}>
+                        <div className='flex justify-between items-center mt-[17px] border-b pb-[13px] border-black/25'>
                             <div className='flex items-center'>
                                 <img src={raghav} alt="" />
 
@@ -65,7 +62,7 @@ const FriendRequest = () => {
                                 </div>
                             </div>
 
-                            <button onClick={()=>handleFriend(item)} className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
+                            <button onClick={() => handleFriend(item)} className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[8px] py-[2px] rounded-[5px]'>Accept</button>
 
                         </div>
 
