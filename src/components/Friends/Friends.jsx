@@ -6,7 +6,7 @@ import swathi from "../../assets/swathi.png"
 import kiran from "../../assets/kiran.png"
 import tejesh from "../../assets/tejesh.png"
 import marvin from "../../assets/marvin.png"
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database';
 import { useSelector } from 'react-redux';
 
 
@@ -23,7 +23,7 @@ const Friends = () => {
             let arr = [];
             snapshot.forEach((item) => {
                 if(data?.uid == item.val().receiverId || data?.uid == item.val().senderId){
-                    arr.push(item.val())
+                    arr.push({...item.val(), blockId: item.key})
                 }
                 
             })
@@ -32,6 +32,22 @@ const Friends = () => {
 
     }, [])
     console.log(friendList)
+
+
+    const handleBlock = (item) => {
+        console.log(item)
+        set(push(ref(db, "block")),{
+            ...item
+
+
+            // receiverName: item.receiverName,
+            // receiverId: item.receiverId,
+            // senderName: item.senderName,
+            // senderId: item.senderId
+        }).then(()=>{
+            remove(ref(db, "friend/" + item.blockId))
+        })
+    }
 
 
 
@@ -63,7 +79,7 @@ const Friends = () => {
                                 </div>
                             </div>
 
-                            <button className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[22px] py-[2px] rounded-[5px]'>Block</button>
+                            <button onClick={() => handleBlock(item)} className='font-primary font-semibold text-[20px] bg-[#1E1E1E] text-white px-[22px] py-[2px] rounded-[5px]'>Block</button>
 
                         </div>
 

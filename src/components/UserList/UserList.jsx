@@ -77,6 +77,19 @@ const UserList = () => {
     }, [])
 
 
+    const [blockList, setBlockList] = useState([]);
+    useEffect(() => {
+        const blockRef = ref(db, "block");
+        onValue(blockRef, (snapshot) => {
+            let arr = [];
+            snapshot.forEach((item) => {
+                arr.push(item.val().receiverId + item.val().senderId);
+            })
+            setBlockList(arr)
+        })
+    }, [])
+
+
 
 
 
@@ -102,18 +115,25 @@ const UserList = () => {
                             </div>
 
                             {
-                                friendList.includes(data?.uid + user.userid) ||
-                                    friendList.includes(user.userid + data?.uid) ? (
-                                    <p className='text-green-600 font-semibold font-primary'>Friend</p>
-
+                                blockList.includes(data?.uid + user.userid) ||
+                                    blockList.includes(user.userid + data?.uid) ? (
+                                    <p className='text-red-600 font-semibold font-primary'>BLOCKED</p>
                                 )
                                     :
-                                    friendRequestList.includes(data?.uid + user.userid) ||
-                                        friendRequestList.includes(user.userid + data?.uid)
-                                        ?
-                                        <FaSquareMinus className='text-[30px]' />
+
+
+                                    friendList.includes(data?.uid + user.userid) ||
+                                        friendList.includes(user.userid + data?.uid) ? (
+                                        <p className='text-green-600 font-semibold font-primary'>Friend</p>
+
+                                    )
                                         :
-                                        <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
+                                        friendRequestList.includes(data?.uid + user.userid) ||
+                                            friendRequestList.includes(user.userid + data?.uid)
+                                            ?
+                                            <FaSquareMinus className='text-[30px]' />
+                                            :
+                                            <FaSquarePlus onClick={() => handleFriendRequest(user)} className='text-[30px]' />
 
 
                             }
