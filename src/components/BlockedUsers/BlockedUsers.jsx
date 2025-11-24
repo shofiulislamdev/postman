@@ -26,7 +26,7 @@ const BlockedUsers = () => {
             })
             setBlockList(arr)
         })
-    })
+    }, [])
 
 
     const handleUnblocked = (item) => {
