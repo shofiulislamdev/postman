@@ -42,14 +42,11 @@ const GroupsList = () => {
         console.log(groupTagline)
         if (!groupName) {
             setGroupNameError("Group Name Please")
-        } else {
-            setGroupNameError("")
-        }
+        } 
+
         if (!groupTagline) {
             setGroupTaglineError("Tagline please")
-        } else {
-            setGroupTaglineError("")
-        }
+        } 
 
 
         // database e pathabo
@@ -59,6 +56,10 @@ const GroupsList = () => {
                 groupTagline: groupTagline,
                 groupCreator: data.uid
             })
+            // form close hobe and input reset hobe
+            setShow(false)
+            setGroupName("")
+            setGroupTagline("")
 
         }
     }
@@ -102,11 +103,11 @@ const GroupsList = () => {
             <div className='px-[10px] h-[390px] overflow-y-scroll'>
                 {
                     show ?
-                        <div className='pt-10 absolute left-[40%] top-[15%] bg-blue-600 h-[300px] w-[500px]'>
+                        <div className='pt-10 absolute left-[40%] top-[15%] bg-teal-300 h-[300px] w-[500px] rounded-3xl'>
                             <div className='p-3'>
-                                <input onChange={(e) => setGroupName(e.target.value)} className='border-2 px-2 py-2 w-full rounded-md' type="text" placeholder='Group Name' />
+                                <input onChange={(e) => {setGroupName(e.target.value), setGroupNameError("")} } className='border-2 px-2 py-2 w-full rounded-md' type="text" placeholder='Group Name' />
                                 <p className='bg-red-600 px-2 rounded text-black text-[14px] mt-2'>{groupNameError}</p>
-                                <input onChange={(e) => setGroupTagline(e.target.value)} className='border-2 px-2 py-2 w-full rounded-md my-5' type="text" placeholder='Group Tagline' />
+                                <input onChange={(e) => {setGroupTagline(e.target.value), setGroupTaglineError("")}} className='border-2 px-2 py-2 w-full rounded-md my-5' type="text" placeholder='Group Tagline' />
                                 <p className='bg-red-500 px-2 rounded text-black text-[14px] mb-3'>{groupTaglineError}</p>
                                 <button onClick={handleCreateGroup} className='bg-black text-white rounded-[7px] font-bold cursor-pointer px-2 py-2 w-full'>Create</button>
                             </div>
