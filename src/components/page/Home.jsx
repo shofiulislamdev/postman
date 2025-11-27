@@ -49,7 +49,7 @@ const Home = () => {
                 verify ?
                     <div>
                         <div className='flex m-[35px]'>
-                            <Sidebar></Sidebar>
+                            <Sidebar active="home"></Sidebar>
                             <div className='w-[427px] ml-[43px]'>
                                 <GroupsList></GroupsList>
                                 <FriendRequest></FriendRequest>

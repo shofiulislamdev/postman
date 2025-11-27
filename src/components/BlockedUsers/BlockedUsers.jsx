@@ -20,9 +20,8 @@ const BlockedUsers = () => {
             let arr = [];
             snapshot.forEach((item) => {
                 if (data?.uid == item.val().receiverId || data?.uid == item.val().senderId) {
-                    arr.push({...item.val(), blockedId: item.key})
+                    arr.push({ ...item.val(), blockedId: item.key })
                 }
-
             })
             setBlockList(arr)
         })

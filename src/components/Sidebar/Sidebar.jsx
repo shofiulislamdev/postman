@@ -8,14 +8,14 @@ import { ImExit } from "react-icons/im";
 
 
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../../slices/userSlice';
 
 
 
 
-const Sidebar = () => {
+const Sidebar = ({ active }) => {
     const data = useSelector((selector) => (selector?.userInfo?.value))
     console.log(data);
 
@@ -56,15 +56,23 @@ const Sidebar = () => {
                 </div>
 
                 <div>
-                    <div className='relative after:absolute after:content-[""] after:top-0 after:left-0 after:w-[167px] after:h-full after:bg-white after:z-[-1] z-1 after:ml-[20px] after:rounded-lg before:absolute before:content-[""] before:top-0 before:right-0 before:h-full before:w-[10px] before:bg-[#1E1E1E] before:rounded-tl-lg before:rounded-bl-lg before:shadow-2xl/90 before:shadow-[-2px_0px_4px_0px_rgba(0,0,0,0.25)]      flex justify-center mt-[78px] py-[20px] cursor-pointer'>
-                        <GoHome className='text-5xl text-[#1E1E1E]' />
+                    <div className={`relative after:absolute after:content-[""] after:top-0 after:left-0 after:w-[167px] after:h-full ${active == "home" ? "after:bg-white" : "after:bg-transparent"}  after:z-[-1] z-1 after:ml-[20px] after:rounded-lg before:absolute before:content-[""] before:top-0 before:right-0 before:h-full before:w-[10px] before:bg-[#1E1E1E] before:rounded-tl-lg before:rounded-bl-lg before:shadow-2xl/90 before:shadow-[-2px_0px_4px_0px_rgba(0,0,0,0.25)]      flex justify-center mt-[78px] py-[20px] cursor-pointer`}>
+
+                        <Link to="/">
+                            <GoHome className={`text-5xl ${active == "home" ? "text-[#1E1E1E]" : "text-white"} `} />
+                        </Link>
+
                     </div>
                 </div>
 
 
                 <div>
-                    <div className='flex justify-center mt-[57px] cursor-pointer'>
-                        <AiFillMessage className='text-5xl text-[#C3C3C3]' />
+                    <div className={`relative after:absolute after:content-[""] after:top-0 after:left-0 after:w-[167px] after:h-full ${active == "message" ? "after:bg-white" : "after:bg-transparent"}  after:z-[-1] z-1 after:ml-[20px] after:rounded-lg before:absolute before:content-[""] before:top-0 before:right-0 before:h-full before:w-[10px] before:bg-[#1E1E1E] before:rounded-tl-lg before:rounded-bl-lg before:shadow-2xl/90 before:shadow-[-2px_0px_4px_0px_rgba(0,0,0,0.25)]      flex justify-center mt-[78px] py-[20px] cursor-pointer`}>
+
+                        <Link to="/msg">
+                            <AiFillMessage className={`text-5xl ${active == "message" ? "text-[#1E1E1E]" : "text-white"} `} />
+                        </Link>
+
                     </div>
                 </div>
 
