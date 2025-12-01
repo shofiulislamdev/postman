@@ -83,18 +83,34 @@ const ChatBox = () => {
 
 
 
-            <div className='flex justify-between items-center mt-[25px]'>
-                <div className='pl-[474px] pr-[15px] py-[15px] bg-[#F1F1F1] inline-block rounded-[10px]'>
-                    <div className='flex space-x-[13px]'>
+            <div className='flex space-x-3 mt-[10px] items-center'>
+                <div className='relative'>
+                    <input type="text" placeholder='Message' className='w-[543px] pr-[200px] pl-[10px] bg-[#F1F1F1] py-[13px] rounded-[10px]' />
+                    <div className='flex absolute top-[15px] right-[12px] space-x-[13px]'>
+                        <MdOutlineEmojiEmotions className='text-[20px] text-[#707070] cursor-pointer' />
+                        <CiCamera className='text-[20px] cursor-pointer' />
+                    </div>
+                </div>
+
+                <div className='bg-[#1E1E1E] p-[15px] rounded-[10px] cursor-pointer'>
+                    <FaTelegramPlane className='text-white' />
+                </div>
+            </div>
+
+
+
+
+
+            {/* <div>
+                <div className='bg-[#F1F1F1] py-[13px] w-[543px] mt-2 rounded-[10px] flex pl-[10px]'>
+                    <input type="text" className='w-full pr-[300px] pl-[10px]' />
+
+                    <div className='flex space-x-[13px] mr-[10px]'>
                         <MdOutlineEmojiEmotions className='text-[20px] text-[#707070]' />
                         <CiCamera className='text-[20px]' />
                     </div>
                 </div>
-
-                <div className='bg-[#1E1E1E] p-[15px] rounded-[10px]'>
-                    <FaTelegramPlane className='text-white' />
-                </div>
-            </div>
+            </div> */}
 
 
 
