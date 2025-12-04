@@ -45,6 +45,7 @@ const ChatBox = () => {
 
         })
 
+        setMsg("")
     }
 
 
@@ -181,7 +182,7 @@ const ChatBox = () => {
 
             <div className='flex space-x-3 mt-[10px] items-center'>
                 <div className='relative'>
-                    <input onChange={(e) => setMsg(e.target.value)} type="text" placeholder='Message' className='w-[543px] pr-[200px] pl-[10px] bg-[#F1F1F1] py-[13px] rounded-[10px]' />
+                    <input onChange={(e) => setMsg(e.target.value)} value={msg} type="text" placeholder='Message' onKeyDown={(e) => e.key == "Enter" && handleMsg()} className='w-[543px] pr-[200px] pl-[10px] bg-[#F1F1F1] py-[13px] rounded-[10px]' />
                     <div className='flex absolute top-[15px] right-[12px] space-x-[13px]'>
                         <MdOutlineEmojiEmotions onClick={(e) => setShowEmoji(!showEmoji)} className='text-[20px] text-[#707070] cursor-pointer' />
                         <CiCamera className='text-[20px] cursor-pointer' />

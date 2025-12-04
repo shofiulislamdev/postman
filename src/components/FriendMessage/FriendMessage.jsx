@@ -15,6 +15,7 @@ const FriendMessage = () => {
     const db = getDatabase()
     const dispatch = useDispatch()
     const data = useSelector((selector) => (selector.userInfo?.value?.user))
+    const activeData = useSelector((state) => state?.activeChatInfo?.value)
 
     const [friendList, setFriendList] = useState([])
 
@@ -34,6 +35,12 @@ const FriendMessage = () => {
     }, [])
     console.log(friendList)
 
+    useEffect(() => {
+        if (activeData) {
+            localStorage.setItem("activeChatInfo", JSON.stringify(activeData));
+        }
+    }, [activeData]);
+
 
     const handleMessage = (item) => {
         console.log("ok cool", item)
@@ -52,7 +59,8 @@ const FriendMessage = () => {
             }))
 
         }
-        
+        // localStorage.setItem("activeChatInfo", JSON.stringify(activeData))
+
     }
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px]'>

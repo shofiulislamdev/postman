@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    value: ""
+    // value: ""
+    value: localStorage?.getItem("activeChatInfo") ? JSON.parse(localStorage?.getItem("activeChatInfo")) : null,
 }
 
 export const activeSlice = createSlice({
