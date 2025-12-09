@@ -7,7 +7,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
-import { userNameUpdate } from '../../slices/userSlice';
+import { userNameUpdate, userStatusUpdate } from '../../slices/userSlice';
 
 
 
@@ -23,6 +23,15 @@ const SettingInfo = () => {
   const [showDisplayName, setShowDisplayName] = useState(data?.displayName || "")
   const [newName, setNewName] = useState("")
 
+
+  // aaaaa status
+  const [showStatus, setShowStatus] = useState(false)
+  const [newStatus, setNewStatus] = useState(data?.status || "")
+  // aaaaa status
+
+
+
+
   const handleEditNameShow = () => {
     setShow(!show)
   }
@@ -36,9 +45,10 @@ const SettingInfo = () => {
       })
       set(ref(db, 'users/' + data?.uid), {
         username: newName,
+        email: data.email,
       }).then(() => {
         dispatch(userNameUpdate(newName))
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err)
       })
 
@@ -46,6 +56,28 @@ const SettingInfo = () => {
 
 
   }
+
+  // aaaaaa status
+  const handleEditStatusShow = () => {
+    setShowStatus(!showStatus)
+  }
+
+  const handleEditStatus = () => {
+    if (auth.currentUser) {
+      set(ref(db, 'users/' + data?.uid + "/status"), newStatus)
+        .then(() => {
+          dispatch(userStatusUpdate(newStatus))
+        })
+        .catch(err => console.log(err))
+    }
+  }
+  // aaaaaa status
+
+
+
+
+
+
   return (
     <div className='font-primary shadow p-5 mt-5 w-[700px]'>
       <h2 className='text-5xl font-bold'>Profile Settings</h2>
@@ -54,7 +86,8 @@ const SettingInfo = () => {
         <img className='w-[100px]' src={profile} alt="" />
         <div>
           <p className='text-2xl font-bold mb-2'>{data?.displayName}</p>
-          <p>Stay home stay safe</p>
+          {/* <p>Stay home stay safe</p> */}
+          <p>{data?.status || "Stay home stay safe"}</p>
         </div>
       </div>
 
@@ -77,6 +110,32 @@ const SettingInfo = () => {
           </div>
 
         }
+
+        {/* aaaaaa status */}
+
+        <div className='flex items-center'>
+          <AiFillMessage className='text-[25px]' />
+          <p onClick={handleEditStatusShow} className='text-lg font-semibold ml-[35px]'>Edit Profile Status Info.</p>
+        </div>
+
+        {
+          showStatus &&
+          <div>
+            <input
+              type="text"
+              onChange={(e) => setNewStatus(e.target.value)}
+              value={newStatus}
+              placeholder='Edit status'
+              className='border w-[300px] p-2'
+            />
+            <button
+              onClick={handleEditStatus}
+              className='bg-[#1E1E1E] text-white px-3 py-2 rounded ml-4'>Submit
+            </button>
+          </div>
+        }
+
+        {/* aaaaaa status */}
 
         <div className='flex items-center'>
           <AiFillMessage className='text-[25px]' />
