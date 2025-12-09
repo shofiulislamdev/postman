@@ -66,6 +66,10 @@ const ChatBox = () => {
     }, [activeData.id])
     console.log(msgList)
 
+    const handleEmoji = (emoji) => {
+        setMsg(msg+emoji.emoji)
+    }
+
 
     return (
         <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] font-primary px-[50px] py-[25px] rounded-[20px]'>
@@ -171,13 +175,22 @@ const ChatBox = () => {
                 </div> */}
 
 
-                {
-                    showEmoji &&
-                    <EmojiPicker className='absolute top-[20px] left-[140px]' />
-                }
+                
+
+                <div className='relative'>
+                    <div className='absolute top-[-400px] left-[100px]'>
+                        {
+                            showEmoji &&
+                            <EmojiPicker onEmojiClick={(emoji) => handleEmoji (emoji)}/>
+                        }
+
+                    </div>
+                </div>
 
 
             </div>
+
+
 
 
             <div className='flex space-x-3 mt-[10px] items-center'>

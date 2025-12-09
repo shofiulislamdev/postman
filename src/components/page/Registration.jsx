@@ -92,7 +92,7 @@ const Registration = () => {
                     console.log(user, "User");
 
                     updateProfile(auth.currentUser, {
-                        displayName: fullName, 
+                        displayName: fullName,
                     })
 
                     toast.success("Registration Successfully done. Please Verify your email")

@@ -77,8 +77,12 @@ const Sidebar = ({ active }) => {
                 </div>
 
                 <div>
-                    <div className='flex justify-center mt-[57px] cursor-pointer'>
-                        <IoSettingsOutline className='text-5xl text-[#C3C3C3]' />
+                    <div className={`relative after:absolute after:content-[""] after:top-0 after:left-0 after:w-[167px] after:h-full ${active == "settings" ? "after:bg-white" : "after:bg-transparent"}  after:z-[-1] z-1 after:ml-[20px] after:rounded-lg before:absolute before:content-[""] before:top-0 before:right-0 before:h-full before:w-[10px] before:bg-[#1E1E1E] before:rounded-tl-lg before:rounded-bl-lg before:shadow-2xl/90 before:shadow-[-2px_0px_4px_0px_rgba(0,0,0,0.25)]      flex justify-center mt-[78px] py-[20px] cursor-pointer`}>
+
+                        <Link to="/settings">
+                            <IoSettingsOutline className={`text-5xl ${active == "settings" ? "text-[#1E1E1E]" : "text-white"} `} />
+                        </Link>
+
                     </div>
                 </div>
 
