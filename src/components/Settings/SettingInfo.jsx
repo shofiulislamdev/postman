@@ -137,10 +137,10 @@ const SettingInfo = () => {
 
         {/* aaaaaa status */}
 
-        <div className='flex items-center'>
+        {/* <div className='flex items-center'>
           <AiFillMessage className='text-[25px]' />
           <p className='text-lg font-semibold ml-[35px]'>Edit Profile Status Info.</p>
-        </div>
+        </div> */}
 
         <div className='flex items-center'>
           <RiImageAddFill className='text-[25px]' />
