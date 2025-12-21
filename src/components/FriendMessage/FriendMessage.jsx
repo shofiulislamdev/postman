@@ -63,7 +63,7 @@ const FriendMessage = () => {
 
     }
     return (
-        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px]'>
+        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px] bg-green-300'>
             <div className='flex justify-between items-center'>
                 <h1 className='font-primary font-semibold text-[20px]'>Friends</h1>
                 <HiOutlineDotsVertical className='text-xl' />

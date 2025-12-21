@@ -72,7 +72,7 @@ const ChatBox = () => {
 
 
     return (
-        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] font-primary px-[50px] py-[25px] rounded-[20px]'>
+        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] font-primary px-[50px] py-[25px] rounded-[20px] bg-green-200'>
             <div className='flex justify-between items-center border-b border-black/25 pb-[30px]'>
                 <div className='flex items-center gap-x-[33px]'>
                     <div>

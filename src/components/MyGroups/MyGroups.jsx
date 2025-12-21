@@ -29,7 +29,7 @@ const MyGroups = () => {
     }, [])
     console.log(myGroup)
     return (
-        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px] mt-9'>
+        <div className='shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[20px] pt-[13px] pb-[21px] pl-[20px] pr-[22px] mt-9 bg-blue-200'>
             <div className='flex justify-between items-center'>
                 <h1 className='font-primary font-semibold text-[20px]'>My Groups</h1>
                 <HiOutlineDotsVertical className='text-xl' />
